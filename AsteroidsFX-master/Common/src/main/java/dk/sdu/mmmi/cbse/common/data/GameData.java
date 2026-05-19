@@ -5,6 +5,7 @@ public class GameData {
     private int displayWidth  = 800 ;
     private int displayHeight = 800;
     private final GameKeys keys = new GameKeys();
+    private int lives = 3;
 
 
     public GameKeys getKeys() {
@@ -27,5 +28,12 @@ public class GameData {
         return displayHeight;
     }
 
+    public int getLives() {
+        return lives;
+    }
+
+    public void setLives(int lives) {
+        this.lives = lives;
+    }
 
 }
