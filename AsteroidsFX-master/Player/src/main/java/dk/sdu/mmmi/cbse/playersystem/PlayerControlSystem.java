@@ -70,7 +70,6 @@ public class PlayerControlSystem implements IEntityProcessingService {
                         spi -> world.addEntity(spi.createBullet(player, gameData))
                 );
             }
-            gameData.setLives(((Player) player).getLives());
         }
 
     }

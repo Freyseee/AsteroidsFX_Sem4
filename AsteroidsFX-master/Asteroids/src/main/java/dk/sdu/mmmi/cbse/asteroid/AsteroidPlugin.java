@@ -54,6 +54,7 @@ public class AsteroidPlugin implements IGamePluginService {
         }
 
         asteroid.setRadius(size);
+        ((Asteroid) asteroid).setSize(size);
 
         return asteroid;
     }

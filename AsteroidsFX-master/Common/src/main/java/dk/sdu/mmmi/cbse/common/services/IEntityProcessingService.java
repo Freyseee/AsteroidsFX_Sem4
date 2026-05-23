@@ -7,7 +7,7 @@ public interface IEntityProcessingService {
 
     /**
      *
-     *
+     * Called once per frame. Used for updating entity states
      *
      * @param gameData
      * @param world

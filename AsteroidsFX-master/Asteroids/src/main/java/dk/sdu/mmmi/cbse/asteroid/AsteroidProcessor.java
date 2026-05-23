@@ -14,7 +14,9 @@ public class AsteroidProcessor implements IEntityProcessingService {
     @Override
     public void process(GameData gameData, World world) {
 
-        for (Entity asteroid : world.getEntities(Asteroid.class)) {
+        for (Entity e : world.getEntities(Asteroid.class)) {
+            Asteroid asteroid = (Asteroid) e;
+
             double changeX = Math.cos(Math.toRadians(asteroid.getRotation()));
             double changeY = Math.sin(Math.toRadians(asteroid.getRotation()));
 
@@ -32,6 +34,12 @@ public class AsteroidProcessor implements IEntityProcessingService {
             }
             if (asteroid.getY() > gameData.getDisplayHeight()) {
                 asteroid.setY(0);
+            }
+
+            if (asteroid.isHit()) {
+                System.out.println("Processing hit asteroid, size: " + asteroid.getSize());
+                asteroidSplitter.createSplitAsteroid(asteroid, world, gameData);
+                world.removeEntity(asteroid);
             }
         }
     }

@@ -27,7 +27,6 @@ class Game {
     private final List<IGamePluginService> gamePluginServices;
     private final List<IEntityProcessingService> entityProcessingServiceList;
     private final List<IPostEntityProcessingService> postEntityProcessingServices;
-    private final Text livesText = new Text(10, 20, "Lives: 3");
     private final Text gameOverText = new Text(300, 400, "GAME OVER");
 
     Game(List<IGamePluginService> gamePluginServices, List<IEntityProcessingService> entityProcessingServiceList, List<IPostEntityProcessingService> postEntityProcessingServices) {
@@ -38,7 +37,7 @@ class Game {
 
     public void start(Stage window) throws Exception {
         gameWindow.setPrefSize(gameData.getDisplayWidth(), gameData.getDisplayHeight());
-        gameWindow.getChildren().add(livesText);
+
 
         Scene scene = new Scene(gameWindow);
         scene.setOnKeyPressed(event -> {
@@ -90,7 +89,7 @@ class Game {
                 update();
                 draw();
                 gameData.getKeys().update();
-                if (gameData.getLives() <= 0) {
+                if (gameData.isGameOver()) {
                     gameWindow.getChildren().add(gameOverText);
                     stop();
                 }
@@ -115,8 +114,6 @@ class Game {
                 gameWindow.getChildren().remove(removedPolygon);
             }
         }
-
-        livesText.setText("Lives: " + gameData.getLives());
 
         for (Entity entity : world.getEntities()) {
             Polygon polygon = polygons.get(entity);

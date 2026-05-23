@@ -15,6 +15,7 @@ public class AsteroidFactory implements IAsteroidFactory {
         int size = rnd.nextInt(10) + 5;
         asteroid.setPolygonCoordinates(size, -size, -size, -size, -size, size, size, size);
         asteroid.setRadius(size);
+        asteroid.setSize(size);
         int edge = rnd.nextInt(4);
         switch (edge) {
             case 0:
