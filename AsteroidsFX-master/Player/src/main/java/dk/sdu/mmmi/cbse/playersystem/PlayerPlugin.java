@@ -11,6 +11,13 @@ public class PlayerPlugin implements IGamePluginService {
     public PlayerPlugin() {
     }
 
+    /***
+     * <p><b>Pre-conditions: </b>gamedata and world are not null, there is no player entity</p>
+     * <p><b>Post-conditions: </b>There is a player entity and is at the center of the screen/world</p>
+     * @param gameData
+     * @param world
+     */
+
     @Override
     public void start(GameData gameData, World world) {
 
@@ -28,6 +35,13 @@ public class PlayerPlugin implements IGamePluginService {
         playerShip.setRadius(8);
         return playerShip;
     }
+
+    /***
+     * <p><b>Pre-conditions: </b>start has been called. gamedata and world are not null</p>
+     * <p><b>Post-conditions: </b>There is no player entity and the game is game over</p>
+     * @param gameData
+     * @param world
+     */
 
     @Override
     public void stop(GameData gameData, World world) {

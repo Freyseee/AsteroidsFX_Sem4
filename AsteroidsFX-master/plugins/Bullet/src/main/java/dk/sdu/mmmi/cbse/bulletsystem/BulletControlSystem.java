@@ -16,8 +16,8 @@ public class BulletControlSystem implements IEntityProcessingService, BulletSPI 
             Bullet bullet = (Bullet) e;
             double changeX = Math.cos(Math.toRadians(bullet.getRotation()));
             double changeY = Math.sin(Math.toRadians(bullet.getRotation()));
-            bullet.setX(bullet.getX() + changeX * 3);
-            bullet.setY(bullet.getY() + changeY * 3);
+            bullet.setX(bullet.getX() + changeX * 10);
+            bullet.setY(bullet.getY() + changeY * 10);
 
             bullet.setLifespan(bullet.getLifespan() - 1);
             if (bullet.getLifespan() <= 0) {

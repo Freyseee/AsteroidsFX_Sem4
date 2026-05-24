@@ -6,9 +6,7 @@ import dk.sdu.mmmi.cbse.common.data.GameData;
 import dk.sdu.mmmi.cbse.common.data.World;
 import dk.sdu.mmmi.cbse.common.services.IEntityProcessingService;
 
-import java.util.Collection;
-import java.util.Random;
-import java.util.ServiceLoader;
+import java.util.*;
 
 import static java.util.stream.Collectors.toList;
 
@@ -52,6 +50,12 @@ public class EnemyControlSystem implements IEntityProcessingService {
     }
 
     private Collection<? extends BulletSPI> getBulletSPIs() {
-        return ServiceLoader.load(BulletSPI.class).stream().map(ServiceLoader.Provider::get).collect(toList());
+        List<BulletSPI> spis = new ArrayList<>();
+        ServiceLoader.load(BulletSPI.class).stream().map(ServiceLoader.Provider::get).forEach(spis::add);
+        ModuleLayer pluginsLayer = GameData.getPluginsLayer();
+        if (pluginsLayer != null) {
+            ServiceLoader.load(pluginsLayer, BulletSPI.class).stream().map(ServiceLoader.Provider::get).forEach(spis::add);
+        }
+        return spis;
     }
 }

@@ -9,12 +9,24 @@ import java.util.Random;
 
 public class AsteroidPlugin implements IGamePluginService {
 
+    /***
+     * <p><b>Pre: </b>gamedata and world not null</p>
+     * <p><b>Post: </b>1 asteroid is spawned</p>
+     * @param gameData
+     * @param world
+     */
     @Override
     public void start(GameData gameData, World world) {
         Entity asteroid = createAsteroid(gameData);
         world.addEntity(asteroid);
     }
 
+    /***
+     * <p><b>Pre: </b>gamedata and world not null</p>
+     * <p><b>Post: </b>all asteroids are removed</p>
+     * @param gameData
+     * @param world
+     */
     @Override
     public void stop(GameData gameData, World world) {
         // Remove entities

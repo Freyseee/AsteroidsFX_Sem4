@@ -8,4 +8,6 @@ module Bullet {
     provides IGamePluginService with dk.sdu.mmmi.cbse.bulletsystem.BulletPlugin;
     provides BulletSPI with dk.sdu.mmmi.cbse.bulletsystem.BulletControlSystem;
     provides IEntityProcessingService with dk.sdu.mmmi.cbse.bulletsystem.BulletControlSystem;
+    exports dk.sdu.mmmi.cbse.bulletsystem;
+    exports dk.sdu.mmmi.cbse.dummy;
 }

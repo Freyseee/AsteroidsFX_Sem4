@@ -10,11 +10,23 @@ public class BulletPlugin implements IGamePluginService {
 
     private Entity bullet;
 
+    /***
+     * <p><b>Pre: </b>gamedata and world not null</p>
+     * <p><b>Post: </b>no bullets created, but can be created via bulletcontrolsystem using bulletSPI</p>
+     * @param gameData
+     * @param world
+     */
     @Override
     public void start(GameData gameData, World world) {
 
     }
 
+    /***
+     * <p><b>Pre: </b>gamedata and world are not null</p>
+     * <p><b>Post: </b>all bullets are removed</p>
+     * @param gameData
+     * @param world
+     */
     @Override
     public void stop(GameData gameData, World world) {
         for (Entity e : world.getEntities()) {

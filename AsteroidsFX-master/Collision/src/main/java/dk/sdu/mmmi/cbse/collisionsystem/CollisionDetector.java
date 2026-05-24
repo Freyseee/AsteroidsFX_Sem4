@@ -29,11 +29,7 @@ public class CollisionDetector implements IPostEntityProcessingService {
                 if (removed.contains(entity1) || removed.contains(entity2)) continue;
 
                 if (this.collides(entity1, entity2)) {
-                    if (entity1 instanceof Player && entity2 instanceof Bullet) continue;
-                    if (entity2 instanceof Player && entity1 instanceof Bullet) continue;
-                    if (entity1 instanceof Enemy && entity2 instanceof Bullet) continue;
-                    if (entity2 instanceof Enemy && entity1 instanceof Bullet) continue;
-                    if (entity1 instanceof Bullet && entity2 instanceof Bullet) continue;
+                    if(entity1 instanceof Asteroid && entity2 instanceof Asteroid) continue;
 
                     if (entity1 instanceof Asteroid) {
                         System.out.println("Asteroid hit set, size: " + ((Asteroid) entity1).getSize());

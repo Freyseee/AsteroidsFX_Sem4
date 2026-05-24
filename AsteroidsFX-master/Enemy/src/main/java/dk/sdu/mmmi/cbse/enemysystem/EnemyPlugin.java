@@ -9,6 +9,12 @@ public class EnemyPlugin implements IGamePluginService {
 
     private Entity enemy;
 
+    /***
+     * <p><b>Pre: </b>World and gamedata not null, no enemy entity</p>
+     * <p><b>Post: </b>enemy entity spawned</p>
+     * @param gameData
+     * @param world
+     */
     @Override
     public void start(GameData gameData, World world) {
         enemy = createEnemy(gameData);
@@ -24,6 +30,12 @@ public class EnemyPlugin implements IGamePluginService {
         return enemy;
     }
 
+    /***
+     * <p><b>Pre: </b> Start has been called. world and gamedata not null</p>
+     * <p><b>Post: </b>enemy is removed</p>
+     * @param gameData
+     * @param world
+     */
     @Override
     public void stop(GameData gameData, World world) {
         world.removeEntity(enemy);
