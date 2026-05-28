@@ -1,13 +1,11 @@
 package dk.sdu.mmmi.cbse.collisionsystem;
 
 import dk.sdu.mmmi.cbse.common.asteroids.Asteroid;
-import dk.sdu.mmmi.cbse.common.bullet.Bullet;
 import dk.sdu.mmmi.cbse.common.services.IPostEntityProcessingService;
 import dk.sdu.mmmi.cbse.common.data.Entity;
 import dk.sdu.mmmi.cbse.common.data.GameData;
 import dk.sdu.mmmi.cbse.common.data.World;
-import dk.sdu.mmmi.cbse.playersystem.Player;
-import dk.sdu.mmmi.cbse.enemysystem.Enemy;
+import dk.sdu.mmmi.cbse.common.bullet.Bullet;
 import dk.sdu.mmmi.cbse.common.asteroids.IAsteroidFactory;
 import java.util.ServiceLoader;
 
@@ -30,6 +28,9 @@ public class CollisionDetector implements IPostEntityProcessingService {
 
                 if (this.collides(entity1, entity2)) {
                     if(entity1 instanceof Asteroid && entity2 instanceof Asteroid) continue;
+
+                    if (entity1 instanceof Bullet && ((Bullet) entity1).getOwnerID().equals(entity2.getID())) continue;
+                    if (entity2 instanceof Bullet && ((Bullet) entity2).getOwnerID().equals(entity1.getID())) continue;
 
                     if (entity1 instanceof Asteroid) {
                         System.out.println("Asteroid hit set, size: " + ((Asteroid) entity1).getSize());

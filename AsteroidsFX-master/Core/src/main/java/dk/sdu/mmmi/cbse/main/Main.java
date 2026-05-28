@@ -20,11 +20,13 @@ public class Main extends Application {
     public void start(Stage window) throws Exception {
 
         // Load plugins from the plugins folder using a separate ModuleLayer
-        Path pluginsPath = new File("plugins").toPath();
+        Path pluginsPath = new File("plugins/mods-mvn").toPath();
+        System.out.println("Looking for plugins at: " + pluginsPath.toAbsolutePath());
         ModuleFinder pluginsFinder = ModuleFinder.of(pluginsPath);
+        pluginsFinder.findAll().forEach(m -> System.out.println("Found module: " + m.descriptor().name()));
         ModuleLayer parentLayer = ModuleLayer.boot();
         Configuration config = parentLayer.configuration()
-                .resolve(pluginsFinder, ModuleFinder.of(), List.of("Bullet"));
+                .resolve(pluginsFinder, ModuleFinder.of(), List.of("Bullet", "Player", "Enemy", "Asteroid"));
         ClassLoader loader = ClassLoader.getSystemClassLoader();
         ModuleLayer pluginsLayer = parentLayer.defineModulesWithOneLoader(config, loader);
 
