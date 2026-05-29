@@ -1,13 +1,13 @@
 package dk.sdu.mmmi.cbse.enemysystem;
 
-import dk.sdu.mmmi.cbse.common.data.Entity;
 import dk.sdu.mmmi.cbse.common.data.GameData;
 import dk.sdu.mmmi.cbse.common.data.World;
 import dk.sdu.mmmi.cbse.common.services.IGamePluginService;
+import dk.sdu.mmmi.cbse.common.ship.Ship;
 
 public class EnemyPlugin implements IGamePluginService {
 
-    private Entity enemy;
+    private Ship enemy;
 
     /***
      * <p><b>Pre: </b>World and gamedata not null, no enemy entity</p>
@@ -21,8 +21,10 @@ public class EnemyPlugin implements IGamePluginService {
         world.addEntity(enemy);
     }
 
-    private Entity createEnemy(GameData gameData) {
-        Enemy enemy = new Enemy();
+    private Ship createEnemy(GameData gameData) {
+        Ship enemy = new Enemy();
+        enemy.setLives(3);
+        enemy.setType("enemy");
         enemy.setPolygonCoordinates(-5, -5, 10, 0, -5, 5);
         enemy.setX(gameData.getDisplayWidth() / 4);
         enemy.setY(gameData.getDisplayHeight() / 4);

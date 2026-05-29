@@ -20,7 +20,7 @@ class ModuleConfig {
 
     @Bean
     public Game game(){
-        return new Game(gamePluginServices(), entityProcessingServiceList(), postEntityProcessingServices());
+        return new Game(gamePluginServices(), entityProcessingServiceList(), postEntityProcessingServices(), serviceClient());
     }
 
     @Bean
@@ -54,5 +54,10 @@ class ModuleConfig {
                 .filter(s -> services.stream().noneMatch(existing -> existing.getClass().getName().equals(s.getClass().getName())))
                 .forEach(services::add);
         return services;
+    }
+
+    @Bean
+    public ServiceClient serviceClient() {
+        return new ServiceClient();
     }
 }

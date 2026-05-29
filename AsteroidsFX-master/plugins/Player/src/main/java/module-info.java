@@ -4,6 +4,7 @@ import dk.sdu.mmmi.cbse.common.services.IGamePluginService;
 
 module Player {
     requires Common;
+    requires CommonShip;
     requires CommonBullet;   
     uses dk.sdu.mmmi.cbse.common.bullet.BulletSPI;
     //exports dk.sdu.mmmi.cbse.playersystem;

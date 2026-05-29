@@ -4,6 +4,7 @@ module Collision {
     requires Common;
     //requires Player;
     //requires Enemy;
+    requires CommonShip;
     requires CommonAsteroids;
     requires CommonBullet;
     exports dummy;

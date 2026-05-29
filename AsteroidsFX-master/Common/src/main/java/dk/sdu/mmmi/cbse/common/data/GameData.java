@@ -7,6 +7,7 @@ public class GameData {
     private final GameKeys keys = new GameKeys();
     private boolean gameOver = false;
     private static ModuleLayer pluginsLayer;
+    private int score = 0;
 
     public GameKeys getKeys() {
         return keys;
@@ -43,6 +44,14 @@ public class GameData {
 
     public static void setPluginsLayer(ModuleLayer pluginsLayer) {
         GameData.pluginsLayer = pluginsLayer;
+    }
+
+    public void addScore(int num) {
+        score += num;
+    }
+
+    public int GetScore() {
+        return score;
     }
 
 }

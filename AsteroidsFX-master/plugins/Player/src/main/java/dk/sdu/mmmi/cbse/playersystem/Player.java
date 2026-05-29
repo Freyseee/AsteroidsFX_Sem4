@@ -1,7 +1,7 @@
 package dk.sdu.mmmi.cbse.playersystem;
 
-import dk.sdu.mmmi.cbse.common.data.Entity;
+import dk.sdu.mmmi.cbse.common.ship.Ship;
 
-public class Player extends Entity {
+public class Player extends Ship {
 
 }

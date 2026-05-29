@@ -20,6 +20,7 @@ import javafx.stage.Stage;
 
 class Game {
 
+    private final ServiceClient serviceClient;
     private final GameData gameData = new GameData();
     private final World world = new World();
     private final Map<Entity, Polygon> polygons = new ConcurrentHashMap<>();
@@ -27,17 +28,21 @@ class Game {
     private final List<IGamePluginService> gamePluginServices;
     private final List<IEntityProcessingService> entityProcessingServiceList;
     private final List<IPostEntityProcessingService> postEntityProcessingServices;
-    private final Text gameOverText = new Text(300, 400, "GAME OVER");
+    private final Text gameOverText = new Text("GAME OVER");
+    private final Text finalScore = new Text("");
+    private final Text currentScore = new Text(10, 20, "Score: 0");
+    private int oldScore = 0;
 
-    Game(List<IGamePluginService> gamePluginServices, List<IEntityProcessingService> entityProcessingServiceList, List<IPostEntityProcessingService> postEntityProcessingServices) {
+    Game(List<IGamePluginService> gamePluginServices, List<IEntityProcessingService> entityProcessingServiceList, List<IPostEntityProcessingService> postEntityProcessingServices, ServiceClient serviceClient) {
         this.gamePluginServices = gamePluginServices;
         this.entityProcessingServiceList = entityProcessingServiceList;
         this.postEntityProcessingServices = postEntityProcessingServices;
+        this.serviceClient = serviceClient;
     }
 
     public void start(Stage window) throws Exception {
         gameWindow.setPrefSize(gameData.getDisplayWidth(), gameData.getDisplayHeight());
-
+        gameWindow.getChildren().add(currentScore);
 
         Scene scene = new Scene(gameWindow);
         scene.setOnKeyPressed(event -> {
@@ -90,7 +95,28 @@ class Game {
                 draw();
                 gameData.getKeys().update();
                 if (gameData.isGameOver()) {
+                    boolean newHighscore = serviceClient.submitScore();
+
+                    for (IGamePluginService plugin : getGamePluginServices()) {
+                        plugin.stop(gameData, world);
+                    }
+
+                    draw();
+
+                    if (newHighscore) {
+                        gameOverText.setText("GAME OVER - NEW HIGHSCORE!");
+                        finalScore.setText("" + gameData.GetScore());
+                    }
+                    gameOverText.setTextAlignment(javafx.scene.text.TextAlignment.CENTER);
+                    gameOverText.setX(gameData.getDisplayWidth() / 2.0 - gameOverText.getLayoutBounds().getWidth() / 2);
+                    gameOverText.setY(gameData.getDisplayHeight() / 2.0);
+
+                    finalScore.setTextAlignment(javafx.scene.text.TextAlignment.CENTER);
+                    finalScore.setX(gameData.getDisplayWidth() / 2.0 - finalScore.getLayoutBounds().getWidth() / 2);
+                    finalScore.setY(gameData.getDisplayHeight() / 2.0 + 30);
+
                     gameWindow.getChildren().add(gameOverText);
+                    gameWindow.getChildren().add(finalScore);
                     stop();
                 }
             }
@@ -104,6 +130,20 @@ class Game {
         for (IPostEntityProcessingService postEntityProcessorService : getPostEntityProcessingServices()) {
             postEntityProcessorService.process(gameData, world);
         }
+        int newScore = gameData.GetScore();
+        currentScore.setText("Score: " + gameData.GetScore());
+        if(newScore>oldScore){
+            serviceClient.Score(newScore - oldScore);
+            oldScore = newScore;
+        }
+
+
+        boolean playerAlive = world.getEntities().stream()
+                .anyMatch(e -> e.getClass().getSimpleName().equals("Player"));
+        if (!playerAlive) {
+            gameData.setGameOver(true);
+        }
+
     }
 
     private void draw() {
